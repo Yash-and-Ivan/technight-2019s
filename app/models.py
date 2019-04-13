@@ -42,6 +42,8 @@ class Debate(db.Model):
     title = db.Column(db.String(127), nullable=False)
     description = db.Column(db.String(127), nullable=True)
     join_password = db.Column(db.String(127), nullable=True)
+    active = db.Column(db.Boolean, default=False)  # 0 is locked, 1 is unlocked
+
 
     # relationships
     created_by_id = db.Column(db.Integer, db.ForeignKey('user.id'))

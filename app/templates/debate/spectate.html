@@ -8,14 +8,14 @@
                     Chat
               </div>
               <ul class="list-group list-group-flush">
-                <li class="list-group-item h-50 mh-50 overflow-auto">
+                <li class="list-group-item h-50 mh-50 overflow-auto" id="messages">
                 </li>
                 <li class="list-group-item">
-                    <form onsubmit="return false">
+                    <form id="messageform">
                         <div class="input-group">
-                           <input type="text" class="form-control">
+                           <input title='message' name='message' type="text" class="form-control">
                            <span class="input-group-btn">
-                                <button class="btn btn-primary" type="button">Go!</button>
+                                <button class="btn btn-primary" type="submit">Go!</button>
                            </span>
                         </div>
                     </form>
@@ -26,4 +26,21 @@
         </div>
         <div class="col-8"><br></div>
     </div>
+
 {% endblock content %}
+
+{# javascript #}
+{% block extra_js %}
+    <script>
+
+    </script>
+        <script>
+            var socket_room = "{{ debate.url }}";
+            var debate_status = eval("{{ debate.active }}".toLowerCase());
+            var socket;
+        </script>
+{##}
+    <script type="text/javascript" src="{{ url_for('static', filename='js/debate/spectate.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/debate/debate.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/debate/chat.js') }}"></script>
+{% endblock extra_js %}

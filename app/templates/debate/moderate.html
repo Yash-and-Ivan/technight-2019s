@@ -1,0 +1,17 @@
+{% extends "_base.html" %}
+
+{% block content %}
+   <h2>Moderating the debate</h2>
+{% endblock content %}
+
+{# javascript #}
+{% block extra_js %}
+        <script>
+            var socket_room = "{{ debate.url }}";
+            var debate_status = eval("{{ debate.active }}".toLowerCase());
+            var socket;
+        </script>
+{##}
+        <script type="text/javascript" src="{{ url_for('static', filename='js/debate/moderate.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/debate/chat.js') }}"></script>
+{% endblock extra_js %}

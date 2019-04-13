@@ -45,7 +45,7 @@
                         <th>{{ debate.title }}</th>
                         <th>{{ debate.description }}</th>
                         <th>
-                            <a href="#" class="btn btn-info" role="button">Moderate</a>
+                            <a href="/debate/{{ debate.url }}/moderate" class="btn btn-info" role="button">Moderate</a>
                             <a onclick="return confirm('Delete {{ debate.title }} ?');" href="/user/debate/{{ debate.url }}/delete" class="btn btn-danger" role="button">Delete</a>
                         </th>
                     </tr>

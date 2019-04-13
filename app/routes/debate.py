@@ -25,6 +25,19 @@ def spectator_required(f):
     return actual_decorator
 
 
+def moderator_required(f):
+    @wraps(f)
+    def actual_decorator(*args, **kwargs):
+        debate = Debate.query.filter_by(url=kwargs['url']).first()
+        if debate is None or debate.created_by_id != current_user.id:
+            flash('You are not allowed to moderate this debate')
+            return redirect(url_for('user.dashboard'))
+
+        return f(*args, **kwargs)
+
+    return actual_decorator
+
+
 @debate.route('/<url>/spectate')
 @login_required
 @spectator_required
@@ -33,4 +46,16 @@ def spectate(url):
     assert(debate is not None)
 
     return render_template('debate/spectate.html',
-                           navbar_extra=' - ' + debate.title)
+                           navbar_extra=' - ' + debate.title,
+                           debate=debate)
+
+
+@debate.route('/<url>/moderate')
+@login_required
+@moderator_required
+def moderate(url):
+    debate = Debate.query.filter_by(url=url).first()
+    assert(debate is not None)
+
+    return render_template('debate/moderate.html',
+                           debate=debate)

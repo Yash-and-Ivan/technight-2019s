@@ -7,7 +7,8 @@ from app.models import db, User
 from app.routes.main import main
 from app.routes.user import user
 from app.routes.debate import debate
-from flask_socketio import SocketIO
+from app.sockets import socketio
+
 
 import pymysql
 pymysql.install_as_MySQLdb()
@@ -50,5 +51,5 @@ login_manager.login_view = 'main.login'
 login_manager.login_message = 'Please Log In to view this page'
 
 # sockets
-socketio = SocketIO(app)
+socketio.init_app(app)
 

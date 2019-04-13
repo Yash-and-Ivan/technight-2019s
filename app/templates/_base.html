@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.2.0/css/all.css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <style>
-    @import url('https://fonts.googleapis.com/css?family=Merriweather');
+        @import url('https://fonts.googleapis.com/css?family=Merriweather');
     </style>
 
 </head>
@@ -23,15 +23,28 @@
 
 <dv class="wrapper">
 
-{#    <!-- navigation -->#}
-{#    <nav class="navbar fixed-top navbar-light bg-light">#}
-{#      <a class="navbar-brand" href="#">Fixed top</a>#}
-{#    </nav>#}
+    <div id="spectate-overlay" style="position: fixed; top: 0; left:0; width: 100%; height: 100%; z-index: 100; background: white; display: none">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <h1 class="text-center">Debate not active</h1>
+        <p class="text-center">Please wait for a moderator to join</p>
+    </div>
+    {#    <!-- navigation -->#}
+    {#    <nav class="navbar fixed-top navbar-light bg-light">#}
+    {#      <a class="navbar-brand" href="#">Fixed top</a>#}
+    {#    </nav>#}
     <nav class="navbar navbar-expand-md navbar-dark sticky-top bg-dark justify-content-between">
         <a class="navbar-brand" href="#">Debatr {{ navbar_extra }}</a>
 
         {% if current_user.is_anonymous %}
-              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('main.index') }}"><i class="fas fa-home"></i> Welcome</a>
@@ -43,18 +56,19 @@
                         <a class="nav-link" href="{{ url_for('main.login') }}"><i class="fas fa-sign-in-alt"></i> Log in</a>
                     </li>
                 </ul>
-              </div>
+            </div>
         {% else %}
-              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('user.dashboard') }}"><i class="fas fa-columns"></i>Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('main.logout') }}"><i class="fas fa-sign-out-alt"></i>Log out</a>
+                        <a class="nav-link" href="{{ url_for('main.logout') }}"><i class="fas fa-sign-out-alt"></i>Log
+                            out</a>
                     </li>
                 </ul>
-              </div>
+            </div>
         {% endif %}
     </nav>
 
@@ -79,20 +93,25 @@
             {% block content %}
 
             {% endblock content %}
+            </div>
         </div>
-    </div>
-
+    </main>
 
     {# javascript #}
-    <script src="https://code.jquery.com/jquery.min.js"
-            integrity="sha384-omOsxWjfyCQN/QkJa5gsN9F1sKX/IRXsLKvv7uHdTUYqkonYl4B/SrIIrNmrnJDj"
-            crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
             integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
             crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
             integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
             crossorigin="anonymous"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.dev.js"></script>
+
+    {% block extra_js %}
+
+    {% endblock %}
 
 </body>
 
