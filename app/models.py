@@ -41,14 +41,16 @@ class Debate(db.Model):
     url = db.Column(db.String(127), nullable=False)  # url at which the debate is accessed (internal)
     title = db.Column(db.String(127), nullable=False)
     description = db.Column(db.String(127), nullable=True)
+    join_password = db.Column(db.String(127), nullable=True)
 
     # relationships
     created_by_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     created_by = relationship('User', back_populates='debates')
 
-    def __init__(self, title: str, descripton: str):
+    def __init__(self, title: str, description: str, password: str):
         self.title = title
-        self.description = descripton
+        self.description = description
+        self.join_password = bcrypt.encrypt(password)
 
         # generate url
         cur_url = str(uuid.uuid4())[-10:]

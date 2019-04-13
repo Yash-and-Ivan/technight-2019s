@@ -1,0 +1,29 @@
+{% extends "_base.html" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-4">
+            <div class="card w-100">
+              <div class="card-header">
+                    Chat
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item h-50 mh-50 overflow-auto">
+                </li>
+                <li class="list-group-item">
+                    <form onsubmit="return false">
+                        <div class="input-group">
+                           <input type="text" class="form-control">
+                           <span class="input-group-btn">
+                                <button class="btn btn-primary" type="button">Go!</button>
+                           </span>
+                        </div>
+                    </form>
+                </li>
+
+              </ul>
+            </div>
+        </div>
+        <div class="col-8"><br></div>
+    </div>
+{% endblock content %}

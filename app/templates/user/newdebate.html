@@ -9,6 +9,10 @@
 
         {{ render_field(new_debate_form.title) }}
         {{ render_field(new_debate_form.description) }}
+
+        {{ render_field(new_debate_form.password) }}
+        {{ render_field(new_debate_form.password_confirm) }}
+
         {{ render_field(new_debate_form.submit) }}
     </form>
 {% endblock content %}
