@@ -1,0 +1,29 @@
+{% macro render_field(field) %}
+    {% if field.type in ["StringField", "TextAreaField", "EmailField", "PasswordField"] %}
+    <div class="form-group">
+        <label for="{{ field.name }}" class="control-label">{{ field.label.text }}</label>
+        {{ field(class='form-control', **kwargs)|safe }}
+        <ul>
+            {% for error in field.errors %}
+                <li style="color: red">{{ error }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% elif field.type in ["RadioField"] %}
+        <div class="form-group">
+            <label for="{{ field.name }}" class="control-label">{{ field.label.text }}</label>
+            {{ field(class='list-unstyled form-control-input', **kwargs)|safe }}
+        </div>
+    {% elif field.type in ["BooleanField"] %}
+        <div class="custom-control custom-checkbox form-group">
+            {{ field(class="custom-control-input") }}
+            <label for="{{ field.name }}" class="custom-control-label list-unstyled">{{ field.label.text }}</label>
+        </div>
+    {% elif field.type in ["SubmitField"] %}
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn-primary">{{ field.label.text }}</button>
+        </div>
+    {% else %}
+        <p>Unable to render field with type {{ field.type }}</p>
+    {% endif %}
+{% endmacro %}
