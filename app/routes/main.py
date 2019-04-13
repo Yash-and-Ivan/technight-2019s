@@ -3,18 +3,33 @@ from app.forms.sign_up import SignUpForm
 from app.forms.log_in import LogInForm
 from app.models import db, User
 
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, login_required, current_user
+from functools import wraps
 
 main = Blueprint('main', __name__)
 
 
+def anonymous_required(f):
+
+    @wraps(f)
+    def actual_decorator(*args, **kwargs):
+        if current_user.is_anonymous:
+            return f(*args, **kwargs)
+
+        flash('Please log out to view this page')
+        return redirect(url_for('user.dashboard'))
+
+    return actual_decorator
+
 @main.route('/')
 @main.route('/index')
+@anonymous_required
 def index():
     return render_template('main/index.html')
 
 
 @main.route('/signup', methods=['GET', 'POST'])
+@anonymous_required
 def signup():
     form = SignUpForm()
 
@@ -36,6 +51,7 @@ def signup():
 
 
 @main.route('/login', methods=['GET', 'POST'])
+@anonymous_required
 def login():
     form = LogInForm()
 

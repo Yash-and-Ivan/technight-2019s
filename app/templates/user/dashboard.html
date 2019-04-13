@@ -6,8 +6,35 @@
     <hr>
     <h4>Spectate</h4>
     <p>Here be a list of all debates avaliable to watch</p>
+    <h4>Moderate</h4>
+    <div class="table-responsive">
+        {% if current_user.debates|length != 0 %}
+        <table class="table table-striped">
+            <thead>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Action</th>
+            </thead>
+            <tbody>
+                {% for debate in current_user.debates %}
+                    <tr>
+                        <th>{{ debate.title }}</th>
+                        <th>{{ debate.description }}</th>
+                        <th>
+                            <a href="#" class="btn btn-info" role="button">Moderate</a>
+                            <a onclick="return confirm('Delete {{ debate.title }} ?');" href="/user/debate/{{ debate.url }}/delete" class="btn btn-danger" role="button">Delete</a>
+                        </th>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+            <p>You don't moderate any debates right now. Feel free to create one below!</p>
+        {% endif %}
+    </div>
     <h4>Join</h4>
     <p>Here be a way to join a debate</p>
     <h4>Create</h4>
-    <p>Here be a way to create a new debate</p>
+    <a href="{{ url_for('user.newdebate') }}" class="btn btn-info" role="button">Create New Debate</a>
+
 {% endblock content %}

@@ -1,5 +1,5 @@
 from config import *
-from flask import Flask, render_template
+from flask import Flask
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_session import Session
@@ -14,6 +14,11 @@ app = Flask(__name__)
 app.secret_key = SECRET_KEY
 app.config['SECRET_KEY'] = SECRET_KEY
 app.config['SESSION_TYPE'] = SESSION_TYPE
+
+# blueprints
+
+app.register_blueprint(main, url_prefix='/')
+app.register_blueprint(user, url_prefix='/user')
 
 # database
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
@@ -38,7 +43,5 @@ def user_loader(id):
     return User.query.get(int(id))
 
 
-
-
-app.register_blueprint(main, url_prefix='/')
-app.register_blueprint(user, url_prefix='/user')
+login_manager.login_view = 'main.login'
+login_manager.login_message = 'Please Log In to view this page'
