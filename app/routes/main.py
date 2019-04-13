@@ -11,7 +11,7 @@ main = Blueprint('main', __name__)
 @main.route('/')
 @main.route('/index')
 def index():
-    return render_template('index.html')
+    return render_template('main/index.html')
 
 
 @main.route('/signup', methods=['GET', 'POST'])
@@ -31,7 +31,7 @@ def signup():
         db.session.add(new_user)
         db.session.commit()
 
-    return render_template('signup.html',
+    return render_template('main/signup.html',
                            sign_up_form=form)
 
 
@@ -49,7 +49,7 @@ def login():
         login_user(user)
         return redirect(url_for('user.dashboard'))
 
-    return render_template('login.html',
+    return render_template('main/login.html',
                            log_in_form=form)
 
 

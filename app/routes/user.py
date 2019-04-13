@@ -3,12 +3,13 @@ from app.forms.sign_up import SignUpForm
 from app.forms.log_in import LogInForm
 from app.models import db, User
 
-from flask_login import login_user
+from flask_login import login_required
 
 user = Blueprint('user', __name__)
 
 
 @user.route('/dashboard')
+@login_required
 def dashboard():
 
-    return render_template('dashboard.html')
+    return render_template('user/dashboard.html')

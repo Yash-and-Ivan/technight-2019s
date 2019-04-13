@@ -1,0 +1,13 @@
+{% extends "_base.html" %}
+{% from "_macros.html" import render_field %}
+
+{% block content %}
+    <h2>Welcome <code>{{ current_user.username }}</code></h2>
+    <hr>
+    <h4>Spectate</h4>
+    <p>Here be a list of all debates avaliable to watch</p>
+    <h4>Join</h4>
+    <p>Here be a way to join a debate</p>
+    <h4>Create</h4>
+    <p>Here be a way to create a new debate</p>
+{% endblock content %}

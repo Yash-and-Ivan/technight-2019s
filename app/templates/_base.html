@@ -12,9 +12,12 @@
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.2.0/css/all.css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <style>
+    @import url('https://fonts.googleapis.com/css?family=Merriweather');
+    </style>
 
 </head>
-<body>
+<body style="font-family: 'Merriweather', serif;">
 
 {# navigation bar goes here #}
 
@@ -25,7 +28,7 @@
 {#      <a class="navbar-brand" href="#">Fixed top</a>#}
 {#    </nav>#}
     <nav class="navbar navbar-expand-md navbar-dark sticky-top bg-dark justify-content-between">
-        <a class="navbar-brand" href="#">Fixed navbar</a>
+        <a class="navbar-brand" href="#">Debatr</a>
 
         {% if current_user.is_anonymous %}
               <div class="collapse navbar-collapse" id="navbarSupportedContent">

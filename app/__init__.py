@@ -38,5 +38,7 @@ def user_loader(id):
     return User.query.get(int(id))
 
 
+
+
 app.register_blueprint(main, url_prefix='/')
 app.register_blueprint(user, url_prefix='/user')
