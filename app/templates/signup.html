@@ -1,0 +1,26 @@
+{% extends "_base.html" %}
+{% from "_macros.html" import render_field %}
+
+{% block content %}
+        <div class="row">
+            <div class="col-2"><br></div>
+            <div class="col">
+                <div class="card">
+                <div class="card-body">
+                    <div class="card-title text-center"><h3>Sign Up</h3></div>
+                    <br>
+                    <form method="POST">
+                        {{ sign_up_form.csrf_token }}
+
+                        {{ render_field(sign_up_form.username) }}
+                        {{ render_field(sign_up_form.password) }}
+                        {{ render_field(sign_up_form.password_confirm) }}
+
+                        {{ render_field(sign_up_form.submit) }}
+                    </form>
+                </div>
+                </div>
+            </div>
+            <div class="col-2"><br></div>
+        </div>
+{% endblock content %}
