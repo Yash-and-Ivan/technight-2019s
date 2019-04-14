@@ -1,3 +1,6 @@
+import gevent.monkey
+gevent.monkey.patch_all()
+
 from flask import Blueprint, render_template, flash, redirect, url_for
 from app.forms.sign_up import SignUpForm
 from app.forms.log_in import LogInForm
@@ -5,6 +8,8 @@ from app.models import db, User
 
 from flask_login import login_user, logout_user, login_required, current_user
 from functools import wraps
+
+from config import AZURE_KEY
 
 main = Blueprint('main', __name__)
 
@@ -75,3 +80,18 @@ def logout():
     logout_user()
     flash('Logged out successfully', 'success')
     return redirect(url_for('main.index'))
+
+
+
+
+@main.route('/checkgood/<text>')
+def positive_message(text):
+    text_analytics_base_url = "https://eastus2.api.cognitive.microsoft.com/text/analytics/v2.0/"
+    sentiment_api_url = text_analytics_base_url + "sentiment"
+
+    docs = {'documents': [{'id': 1, 'language': 'en', 'text': text}]}
+    headers = {"Ocp-Apim-Subscription-Key": AZURE_KEY}
+    import requests
+    response = requests.post(sentiment_api_url, headers=headers, json=docs)
+    sentiment = response.json()['documents'][0]['score']
+    return str(sentiment > 0.25)
