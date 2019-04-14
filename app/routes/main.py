@@ -82,8 +82,6 @@ def logout():
     return redirect(url_for('main.index'))
 
 
-
-
 @main.route('/checkgood/<text>')
 def positive_message(text):
     text_analytics_base_url = "https://eastus2.api.cognitive.microsoft.com/text/analytics/v2.0/"

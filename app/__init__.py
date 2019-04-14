@@ -8,7 +8,7 @@ from app.routes.main import main
 from app.routes.user import user
 from app.routes.debate import debate
 from app.sockets import socketio
-
+from flask_talisman import Talisman
 
 import pymysql
 pymysql.install_as_MySQLdb()
@@ -52,4 +52,5 @@ login_manager.login_message = 'Please Log In to view this page'
 
 # sockets
 socketio.init_app(app)
+
 
