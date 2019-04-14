@@ -18,6 +18,9 @@ def dashboard():
 
 @user.route('/debate/new', methods=['GET', 'POST'])
 def newdebate():
+    flash('For the purposes of this demonstration, debate creation has been temporarily disabled')
+    return redirect(url_for('user.dashboard'))
+
     form = NewDebateForm()
 
     if form.validate_on_submit():
@@ -34,7 +37,6 @@ def newdebate():
         db.session.commit()
         flash('New Debate Created!', 'success')
         return redirect(url_for('user.dashboard'))
-
 
     return render_template('user/newdebate.html',
                            new_debate_form=form)

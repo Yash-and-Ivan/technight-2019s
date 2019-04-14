@@ -1,7 +1,7 @@
 <html>
 <head>
 
-    <title>{{ title }}</title>
+    <title>BANTR</title>
 
     {# meta tags #}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,6 +16,25 @@
         @import url('https://fonts.googleapis.com/css?family=Merriweather');
     </style>
 
+    {# favicons #}
+    <link rel="apple-touch-icon" sizes="57x57" href="/static/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/static/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/static/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/static/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/static/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/static/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/static/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href=/static//apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/static/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/static/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16x16.png">
+    <link rel="manifest" href="/static/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/static/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
 </head>
 <body style="font-family: 'Merriweather', serif;">
 
@@ -23,7 +42,8 @@
 
 <dv class="wrapper">
 
-    <div id="spectate-overlay" style="position: fixed; top: 0; left:0; width: 100%; height: 100%; z-index: 100; background: white; display: none">
+    <div id="spectate-overlay"
+         style="position: fixed; top: 0; left:0; width: 100%; height: 100%; z-index: 100; background: white; display: none">
         <br>
         <br>
         <br>
@@ -41,7 +61,10 @@
     {#      <a class="navbar-brand" href="#">Fixed top</a>#}
     {#    </nav>#}
     <nav class="navbar navbar-expand-md navbar-dark sticky-top bg-dark justify-content-between">
-        <a class="navbar-brand" href="#">Bantr {{ navbar_extra }}</a>
+        <a class="navbar-brand" href="#">
+            <img src="https://i.imgur.com/bZHDTBP.png" width="30" height="30" class="d-inline-block align-top" alt="">
+            Bantr {{ navbar_extra }}
+        </a>
 
         {% if current_user.is_anonymous %}
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -61,11 +84,10 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('user.dashboard') }}"><i class="fas fa-columns"></i>Dashboard</a>
+                        <a class="nav-link" href="{{ url_for('user.dashboard') }}"><i class="fas fa-columns"></i> Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('main.logout') }}"><i class="fas fa-sign-out-alt"></i>Log
-                            out</a>
+                        <a class="nav-link" href="{{ url_for('main.logout') }}"><i class="fas fa-sign-out-alt"> </i>Log out</a>
                     </li>
                 </ul>
             </div>

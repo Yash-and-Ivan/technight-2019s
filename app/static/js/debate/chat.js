@@ -24,7 +24,12 @@ $('#messageform').submit(function (e) {
                 return choices[index];
             }
 
-            let pos = ["That's not very nice"];
+            let pos = ["That's not very nice",
+                    "Try something more *positive*!",
+                    "We know who you are. Don't do it again.",
+                    "Stop! Show some respect.",
+                    "There's a reason you're not a moderator.",
+                    "Enough is enough."];
             alert(choose(pos))
         }
     });
