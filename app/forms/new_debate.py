@@ -9,7 +9,7 @@ class NewDebateForm(FlaskForm):
                                     length(3, 31)])
     description = StringField('Short Description:',
                               validators=[input_required('This field is required.'),
-                                          length(0, 15)])
+                                          length(1, 31)])
 
     password = PasswordField('Join Password:',
                              validators=[input_required('This field is required.'),

@@ -47,7 +47,7 @@ class Debate(db.Model):
     join_password = db.Column(db.String(127), nullable=True)
     active = db.Column(db.Boolean, default=False)  # 0 is locked, 1 is unlocked
 
-    question_in_progress = db.Column(db.Boolean, default=True)
+    question_in_progress = db.Column(db.Boolean, default=False)
     cur_question = db.Column(db.String(2047), nullable=True)
     cur_user = db.Column(db.String(127), nullable=True)
     cur_timer = db.Column(db.Integer, nullable=True)

@@ -63,7 +63,7 @@
     <nav class="navbar navbar-expand-md navbar-dark sticky-top bg-dark justify-content-between">
         <a class="navbar-brand" href="#">
             <img src="https://i.imgur.com/bZHDTBP.png" width="30" height="30" class="d-inline-block align-top" alt="">
-            Bantr {{ navbar_extra }}
+            Bantr {{ navbar_extra|safe }}
         </a>
 
         {% if current_user.is_anonymous %}

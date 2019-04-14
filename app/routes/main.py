@@ -46,10 +46,12 @@ def signup():
             flash('Username taken', 'danger')
             return redirect(url_for('main.signup'))
 
-        flash('Cool form dude', 'success')
+        flash('Account Created! Sign in below.', 'success')
         new_user = User(form.username.data, form.password.data)
         db.session.add(new_user)
         db.session.commit()
+
+        return redirect(url_for('main.login'))
 
     return render_template('main/signup.html',
                            sign_up_form=form)

@@ -59,7 +59,7 @@ def spectate(url):
     assert(debate is not None)
 
     return render_template('debate/spectate.html',
-                           navbar_extra=' - ' + debate.title,
+                           navbar_extra=' - Spectating ' + debate.title + '<a href="/user/dashboard" class="btn btn-danger"> leave </a>',
                            debate=debate)
 
 
@@ -71,7 +71,7 @@ def moderate(url):
     assert(debate is not None)
 
     return render_template('debate/moderate.html',
-                           navbar_extra=' - Moderating ' + debate.title,
+                           navbar_extra=' - Moderating ' + debate.title + '<a href="/user/dashboard" class="btn btn-danger"> leave </a>',
                            debate=debate)
 
 
@@ -83,6 +83,6 @@ def participate(url, password):
     assert (debate is not None)
 
     return render_template('debate/participate.html',
-                           navbar_extra=' - Debating at ' + debate.title,
+                           navbar_extra=' - Debating at ' + debate.title + '<a href="/user/dashboard" class="btn btn-danger"> leave </a>',
                            debate=debate)
 

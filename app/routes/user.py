@@ -18,8 +18,8 @@ def dashboard():
 
 @user.route('/debate/new', methods=['GET', 'POST'])
 def newdebate():
-    flash('For the purposes of this demonstration, debate creation has been temporarily disabled')
-    return redirect(url_for('user.dashboard'))
+    # flash('For the purposes of this demonstration, debate creation has been temporarily disabled')
+    # return redirect(url_for('user.dashboard'))
 
     form = NewDebateForm()
 
