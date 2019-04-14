@@ -1,7 +1,7 @@
 from flask_socketio import SocketIO, join_room, emit, rooms
 from flask import request
 from flask_login import current_user
-from app.models import Debate, db
+from app.models import Debate, db, User
 
 socketio = SocketIO()
 
@@ -25,6 +25,11 @@ def disconnect():
 
         if debate is None:
             continue
+
+        if debate.cur_user == current_user.username:
+            debate.question_in_progress = False
+            db.session.commit()
+            emit('end-question', False, room=room, broadcast=True)
 
         if debate.created_by_id == current_user.id:
             debate.active = False
@@ -94,3 +99,25 @@ def debator_join(room):
     emit('debator-join', current_user.username, room=room, broadcast=True)
 
     print("Debator joined")
+
+
+@socketio.on('new-question')
+def new_question(data):
+    print(data)
+    debate = Debate.query.filter_by(url=data['room']).first()
+    debate.question_in_progress = True
+    debate.cur_user = data['user']
+    debate.cur_timer = data['time']
+    debate.cur_question = data['question']
+    db.session.commit()
+    emit('new-question', data, room=data['room'], broadcast=True)
+    print("New question being asked")
+
+
+@socketio.on('end-question')
+def end_question(data):
+    print("Question ended")
+    debate = Debate.query.filter_by(url=data).first()
+    debate.question_in_progress = False
+    db.session.commit()
+    emit('end-question', False, room=data, broadcast=True)

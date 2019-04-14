@@ -1,4 +1,8 @@
 send_message = function(msg){
+    if(msg == null || msg.trim() === ''){
+        return;
+    }
+
     let to_send = {
         type: 'message',
         data: msg,
@@ -38,6 +42,10 @@ $(document).ready(function() {
                 $("#messages").append("<p style='color:red'>" + data['message'] + " left</p>");
                 break;
         }
+
+        // scroll
+        $("#messages").animate({ scrollTop: $("#messages")[0].scrollHeight }, 500);
+
     });
 
     // debator join event

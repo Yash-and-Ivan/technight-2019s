@@ -4,27 +4,73 @@
     <div class="row">
         <div class="col-4">
             <div class="card w-100">
-              <div class="card-header">
+                <div class="card-header">
                     Chat
-              </div>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item h-50 mh-50 overflow-auto" id="messages">
-                </li>
-                <li class="list-group-item">
-                    <form id="messageform">
-                        <div class="input-group">
-                           <input title='message' name='message' type="text" class="form-control">
-                           <span class="input-group-btn">
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item h-50 mh-50 overflow-auto" id="messages">
+                    </li>
+                    <li class="list-group-item">
+                        <form id="messageform">
+                            <div class="input-group">
+                                <input title='message' name='message' type="text" class="form-control">
+                                <span class="input-group-btn">
                                 <button class="btn btn-primary" type="submit">Go!</button>
                            </span>
-                        </div>
-                    </form>
-                </li>
+                            </div>
+                        </form>
+                    </li>
 
-              </ul>
+                </ul>
             </div>
         </div>
-        <div class="col-8"><br></div>
+        <div class="col-8">
+            <div class="card w-100">
+                <div class="card-header">
+                    Active Debators
+                </div>
+                <div class="card-body" id="debator-list">
+                    {% for debator in debate.get_debators() %}
+                        <button id="{{ debator.username }}" class="btn btn-light">{{ debator.username }}</button>
+                    {% endfor %}
+                </div>
+            </div>
+            <br>
+            {% if debate.question_in_progress %}
+                <div class="card w-100" id="question-show" style="">
+                    <div class="card-header">
+                        Question in progress
+                    </div>
+                    <div class="card-body">
+                        <p>Question: <span id="current-question">{{ debate.cur_question }}</span></p>
+                        <p>Question directed at:
+                            <button class="btn btn-light" id="current-questioned">{{ debate.cur_user }}</button>
+                        </p>
+                        <div class="timer">
+                            Timer: <span id="current-timer">TIMER UNAVALIABLE</span>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            {% else %}
+                <div class="card w-100" id="question-show" style="display: none">
+                    <div class="card-header">
+                        Question in progress
+                    </div>
+                    <div class="card-body">
+                        <p>Question: <span id="current-question"></span></p>
+                        <p>Question directed at:
+                            <button class="btn btn-light" id="current-questioned"></button>
+                        </p>
+                        <div class="timer">
+                            Timer: <span id="current-timer">5s</span>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+
+            {% endif %}
+        </div>
     </div>
 
 {% endblock content %}
@@ -34,13 +80,13 @@
     <script>
 
     </script>
-        <script>
-            var socket_room = "{{ debate.url }}";
-            var debate_status = eval("{{ debate.active }}".toLowerCase());
-            var socket;
-        </script>
-{##}
+    <script>
+        var socket_room = "{{ debate.url }}";
+        var debate_status = eval("{{ debate.active }}".toLowerCase());
+        var socket;
+    </script>
+    {##}
     <script type="text/javascript" src="{{ url_for('static', filename='js/debate/spectate.js') }}"></script>
-        <script type="text/javascript" src="{{ url_for('static', filename='js/debate/debate.js') }}"></script>
-        <script type="text/javascript" src="{{ url_for('static', filename='js/debate/chat.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/debate/debate.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/debate/chat.js') }}"></script>
 {% endblock extra_js %}

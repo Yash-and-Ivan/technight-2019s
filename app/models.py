@@ -47,6 +47,11 @@ class Debate(db.Model):
     join_password = db.Column(db.String(127), nullable=True)
     active = db.Column(db.Boolean, default=False)  # 0 is locked, 1 is unlocked
 
+    question_in_progress = db.Column(db.Boolean, default=True)
+    cur_question = db.Column(db.String(2047), nullable=True)
+    cur_user = db.Column(db.String(127), nullable=True)
+    cur_timer = db.Column(db.Integer, nullable=True)
+
     # relationships
     created_by_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     created_by = relationship('User', back_populates='debates', foreign_keys=[created_by_id])

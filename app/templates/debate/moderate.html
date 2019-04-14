@@ -60,6 +60,43 @@
                     <p><i>This will effect the playback</i></p>
                 </div>
             </div>
+            <br>
+            {% if debate.question_in_progress %}
+                <div class="card w-100" id="question-show" style="">
+                    <div class="card-header">
+                        Question in progress
+                    </div>
+                    <div class="card-body">
+                        <p>Question: <span id="current-question">{{ debate.cur_question }}</span></p>
+                        <p>Question directed at:
+                            <button class="btn btn-light" id="current-questioned">{{ debate.cur_user }}</button>
+                        </p>
+                        <div class="timer">
+                            Timer: <span id="current-timer">TIMER UNAVALIABLE</span>
+                        </div>
+                        <br>
+                        <button class="btn btn-danger" onclick="endquestion()">End Prematurely</button>
+                    </div>
+                </div>
+            {% else %}
+                <div class="card w-100" id="question-show" style="display: none">
+                    <div class="card-header">
+                        Question in progress
+                    </div>
+                    <div class="card-body">
+                        <p>Question: <span id="current-question"></span></p>
+                        <p>Question directed at:
+                            <button class="btn btn-light" id="current-questioned"></button>
+                        </p>
+                        <div class="timer">
+                            Timer: <span id="current-timer">5s</span>
+                        </div>
+                        <br>
+                        <button class="btn btn-danger" onclick="endquestion()">End Prematurely</button>
+                    </div>
+                </div>
+
+            {% endif %}
         </div>
     </div>
 
@@ -73,8 +110,13 @@
         var socket;
 
         var cur_questioned = null; // current person being questioned
+        var timer = null;
 
-
+        {% if debate.question_in_progress %}
+            var question_in_progress = true;
+        {% else %}
+            var question_in_progress = false;
+        {% endif %}
     </script>
     {##}
     <script type="text/javascript" src="{{ url_for('static', filename='js/debate/moderate.js') }}"></script>
