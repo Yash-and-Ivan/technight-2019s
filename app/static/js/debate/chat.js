@@ -22,7 +22,12 @@ $(document).ready(function() {
         switch(data['type']){
             case 'message':
                 console.log('new message');
-                $("#messages").append("<p>" + data['username'] + ": " + data['data'] + "</p>");
+                console.log(data);
+                if(!data['moderator']){
+                    $("#messages").append("<p>" + data['username'] + ": " + data['data'] + "</p>");
+                } else {
+                    $("#messages").append("<p style='color:orangered'>" + data['username'] + ": " + data['data'] + "</p>");
+                }
 
                 break;
             case 'join':
@@ -34,10 +39,14 @@ $(document).ready(function() {
                 break;
         }
     });
+
+    // debator join event
+    socket.on('debator-join', function(data){
+        // remove from debator list
+    });
+    // debator leave event
+    socket.on('debator-leave', function(data){
+        // add to debator list
+    });
 });
-//
-// $(document).ready(function(){
-//    initializeSocket();
-//
-//    console.log("chat");
-// });
+

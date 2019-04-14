@@ -18,7 +18,7 @@ def spectator_required(f):
         debate = Debate.query.filter_by(url=kwargs['url']).first()
 
         if debate is None or debate.created_by.id == current_user.id:
-            flash('You are not allowed to spectate this debate')
+            flash('You are not allowed to spectate this debate', 'danger')
             return redirect(url_for('user.dashboard'))
 
         return f(*args, **kwargs)
@@ -30,7 +30,20 @@ def moderator_required(f):
     def actual_decorator(*args, **kwargs):
         debate = Debate.query.filter_by(url=kwargs['url']).first()
         if debate is None or debate.created_by_id != current_user.id:
-            flash('You are not allowed to moderate this debate')
+            flash('You are not allowed to moderate this debate', 'danger')
+            return redirect(url_for('user.dashboard'))
+
+        return f(*args, **kwargs)
+
+    return actual_decorator
+
+
+def debate_password_required(f):
+    @wraps(f)
+    def actual_decorator(*args, **kwargs):
+        debate = Debate.query.filter_by(url=kwargs['url']).first()
+        if debate is None or debate.created_by_id == current_user.id or not debate.validate_password(kwargs['password']):
+            flash('Invalid password/debate/user combo', 'danger')
             return redirect(url_for('user.dashboard'))
 
         return f(*args, **kwargs)
@@ -58,4 +71,18 @@ def moderate(url):
     assert(debate is not None)
 
     return render_template('debate/moderate.html',
+                           navbar_extra=' - Moderating ' + debate.title,
                            debate=debate)
+
+
+@debate.route('/<url>/<password>/participate')
+@login_required
+@debate_password_required
+def participate(url, password):
+    debate = Debate.query.filter_by(url=url).first()
+    assert (debate is not None)
+
+    return render_template('debate/participate.html',
+                           navbar_extra=' - Debating at ' + debate.title,
+                           debate=debate)
+

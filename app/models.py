@@ -15,6 +15,9 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(127), nullable=False)
     password = db.Column(db.String(127), nullable=False)
 
+    active = db.Column(db.Boolean, nullable=False, default=False)
+    active_in_id = db.Column(db.Integer, nullable=True)
+
     # relationships
     debates = relationship('Debate', back_populates='created_by')
 
@@ -44,10 +47,9 @@ class Debate(db.Model):
     join_password = db.Column(db.String(127), nullable=True)
     active = db.Column(db.Boolean, default=False)  # 0 is locked, 1 is unlocked
 
-
     # relationships
     created_by_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    created_by = relationship('User', back_populates='debates')
+    created_by = relationship('User', back_populates='debates', foreign_keys=[created_by_id])
 
     def __init__(self, title: str, description: str, password: str):
         self.title = title
@@ -61,6 +63,17 @@ class Debate(db.Model):
             cur_url = str(uuid.uuid4())[-10:]
 
         self.url = cur_url
+
+    def validate_password(self, password):
+        return bcrypt.verify(password, self.join_password)
+
+    def get_debators(self):
+        ret = []
+        for user in User.query.all():
+            if user.active and user.active_in_id == self.id:
+                ret.append(user)
+
+        return ret
 
     def __repr__(self):
         return "<Debate %s>" % self.url

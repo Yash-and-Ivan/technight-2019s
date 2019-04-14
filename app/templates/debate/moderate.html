@@ -1,17 +1,82 @@
 {% extends "_base.html" %}
 
 {% block content %}
-   <h2>Moderating the debate</h2>
+    <div class="row">
+        <div class="col-4">
+            <div class="card w-100">
+                <div class="card-header">
+                    Chat
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item h-50 mh-50 overflow-auto" id="messages">
+                    </li>
+                    <li class="list-group-item">
+                        <form id="messageform">
+                            <div class="input-group">
+                                <input title='message' name='message' type="text" class="form-control">
+                                <span class="input-group-btn">
+                                <button class="btn btn-primary" type="submit">Go!</button>
+                           </span>
+                            </div>
+                        </form>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <div class="col-8">
+            <div class="card w-100">
+                <div class="card-header">
+                    Active Debators
+                </div>
+                <div class="card-body" id="debator-list">
+                    {% for debator in debate.get_debators() %}
+                        <button onclick="questionRoutine_setup('{{ debator.username }}')" id="{{ debator.username }}"
+                                class="btn btn-light">{{ debator.username }}</button>
+                    {% endfor %}
+                </div>
+            </div>
+            <br>
+            <div class="card w-100" id="question-area" style="display: none">
+                <div class="card-header">
+                    Ask a question
+                </div>
+                <div class="card-body">
+                    <p>Selected user:
+                        <button class="btn btn-light" id="selected-user"></button>
+                    </p>
+                    <div class="form-group">
+                        <label for="comment">Question</label>
+                        <textarea class="form-control" rows="3" id="question-asked"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="customRange2">Timer:</label> <span id="timer-value">15s</span>
+                        <input type="range" class="custom-range" value="15" min="1" max="120" id="time-limit">
+                    </div>
+
+                    <button class="btn btn-primary" onclick="askquestion();">Ask</button>
+                    <br> <br>
+                    <p><i>Please do not disconnect during the time in which a question is being asked.</i></p>
+                    <p><i>This will effect the playback</i></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock content %}
 
 {# javascript #}
 {% block extra_js %}
-        <script>
-            var socket_room = "{{ debate.url }}";
-            var debate_status = eval("{{ debate.active }}".toLowerCase());
-            var socket;
-        </script>
-{##}
-        <script type="text/javascript" src="{{ url_for('static', filename='js/debate/moderate.js') }}"></script>
-        <script type="text/javascript" src="{{ url_for('static', filename='js/debate/chat.js') }}"></script>
+    <script>
+        var socket_room = "{{ debate.url }}";
+        var debate_status = eval("{{ debate.active }}".toLowerCase());
+        var socket;
+
+        var cur_questioned = null; // current person being questioned
+
+
+    </script>
+    {##}
+    <script type="text/javascript" src="{{ url_for('static', filename='js/debate/moderate.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/debate/chat.js') }}"></script>
 {% endblock extra_js %}

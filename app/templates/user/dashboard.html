@@ -20,7 +20,7 @@
                         <th>{{ debate.description }}</th>
                         <th><i>{{ debate.created_by.username }}</i></th>
                         <th>
-                            <a href="#" class="btn btn-success" role="button">Join</a>
+                            <a href="#" onclick="attemptjoin('{{ debate.url }}');" class="btn btn-success" role="button">Join</a>
                             <a href="/debate/{{ debate.url }}/spectate" class="btn btn-info" role="button">Spectate</a>
                         </th>
                     </tr>
@@ -60,3 +60,15 @@
     <a href="{{ url_for('user.newdebate') }}" class="btn btn-info" role="button">Create New Debate</a>
 
 {% endblock content %}
+
+{% block extra_js %}
+    <script>
+        attemptjoin = function(url){
+            let pass = prompt('Password?');
+
+            if(pass != null && pass.trim() !== '') {
+                window.location = '/debate/' + url + '/' + pass + '/participate'
+            }
+        }
+    </script>
+{% endblock extra_js %}

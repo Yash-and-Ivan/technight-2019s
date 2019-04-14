@@ -20,7 +20,6 @@ def disconnect():
     }
     for room in rooms(request.sid):
         ret['room'] = room
-        emit('chat-event', ret, broadcast=True, room=room)
 
         debate = Debate.query.filter_by(url=room).first()
 
@@ -33,6 +32,17 @@ def disconnect():
 
             emit('debate-status-update', False, broadcast=True, room=room)
 
+        else:
+            emit('chat-event', ret, broadcast=True, room=room)
+
+    if current_user.active:
+        current_user.active = False
+        debate = Debate.query.get(current_user.active_in_id)
+        current_user.active_in_id = None
+        emit('debator-leave', current_user.username, broadcast=True, room=debate.url)
+
+
+    db.session.commit()
     print('A client has disconnected')
 
 
@@ -65,5 +75,22 @@ def join(data):
 @socketio.on('chat-message')
 def message(data):
     data['username'] = current_user.username
+    debate = Debate.query.filter_by(url=data['room']).first()
+    if debate.created_by_id == current_user.id:
+        data['moderator'] = True
+    else:
+        data['moderator'] = False
     emit('chat-event', data, broadcast=True, room=data['room'])
 
+
+@socketio.on('debator-join')
+def debator_join(room):
+    # debator join
+    current_user.active = True
+    debate = Debate.query.filter_by(url=room).first()
+    current_user.active_in_id = debate.id
+    db.session.commit()
+
+    emit('debator-join', current_user.username, room=room, broadcast=True)
+
+    print("Debator joined")

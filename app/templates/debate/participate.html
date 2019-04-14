@@ -1,10 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "_base.html" %}
 
-</body>
-</html>
+{% block content %}
+    <div class="row">
+        <div class="col-4">
+            <div class="card w-100">
+              <div class="card-header">
+                    Chat
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item h-50 mh-50 overflow-auto" id="messages">
+                </li>
+                <li class="list-group-item">
+                    <h4>Debators are not allowed to chat</h4>
+                </li>
+
+              </ul>
+            </div>
+        </div>
+        <div class="col-8">
+            <div class="card w-100">
+              <div class="card-header">
+                    Active Debators
+              </div>
+              <div class="card-body" id="debator-list">
+                  {% for debator in debate.get_debators() %}
+                      <button id="{{ debator.username }}" class="btn btn-light">{{ debator.username }}</button>
+                  {% endfor %}
+              </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+{# javascript #}
+{% block extra_js %}
+        <script>
+            var socket_room = "{{ debate.url }}";
+            var debate_status = eval("{{ debate.active }}".toLowerCase());
+            var username = "{{ current_user.username }}";
+            var question_in_progress = false;
+            var socket;
+        </script>
+{##}
+        <script type="text/javascript" src="{{ url_for('static', filename='js/debate/participate.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/debate/chat.js') }}"></script>
+{% endblock extra_js %}
