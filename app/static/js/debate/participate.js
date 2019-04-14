@@ -54,7 +54,8 @@ $(document).ready(function () {
 
 do_timer = function(){
     timer--;
-    if(timer < 0){
+    if(timer <= 0){
+        red_flash();
         timer = 0;
     }
     $("#current-timer").text(timer + 's');
@@ -74,3 +75,10 @@ update_overlay = function () {
 $(document).ready(function () {
     update_overlay();
 });
+
+red_flash = function(){
+  $("#red-flash").show();
+  $("#red-flash").fadeOut(500, function(){
+      $(this).hide();
+  });
+};

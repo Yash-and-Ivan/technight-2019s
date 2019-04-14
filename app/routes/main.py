@@ -95,3 +95,8 @@ def positive_message(text):
     response = requests.post(sentiment_api_url, headers=headers, json=docs)
     sentiment = response.json()['documents'][0]['score']
     return str(sentiment > 0.25)
+
+@main.route('/enter')
+def enter():
+
+    return render_template('/main/enter.html')
